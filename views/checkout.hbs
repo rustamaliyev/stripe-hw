@@ -1,6 +1,7 @@
 <div class="row justify-content-md-center">
   <div class="col-6">
     <div class="text-center mt-40">
+      
       <h1>
         Checkout — Stripe Press
       </h1>
@@ -8,16 +9,9 @@
         {{title}}
       </h5>
       <hr class="mt-40">
-      <div class="mt-20 text-info">
-        Total due: $<span class="amount" data-amount="{{amount}}"></span>
-      </div>
-    </div>
-    <div class="card box-shadow mt-40">
 
-      <div class="card-body">
-        <p id="card-error" role="alert"></p>
-
-        <div class="mt-40 text-center text-success success hidden">
+      <!--Success message display-->
+       <div class="mt-40 text-center text-success success hidden">
           <h1>
             <i class="far fa-check-circle"></i>
             Success!
@@ -27,6 +21,21 @@
             <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
           </p>
         </div>
+      <!--End success message display-->
+
+      <!--Error message display-->
+      <p id="card-error" role="alert"></p>
+      <!--End error message display-->
+      
+    </div>
+
+    <div class="card box-shadow mt-40">
+      <div class="card-body">
+        
+        <div class="mt-20 text-info text-center">
+          Total due: $<span class="amount" data-amount="{{amount}}"></span>
+        </div>
+ 
         <form name="payment-form" id="payment-form">
 
           <div>

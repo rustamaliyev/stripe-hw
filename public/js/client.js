@@ -1,6 +1,14 @@
 // A reference to Stripe.js initialized with your real test publishable API key.
 var stripe = Stripe("pk_test_uSOoDwKWnuGo4JhrKJYSLF7x00tLQc9JtN");
 
+if(window.location.pathname == '/success') {
+  
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const piid = urlParams.get('piid')
+  document.querySelector(".result-message").innerHTML = `Success! Here is Payment ID confirmation: ${piid}`;
+}
+
 var amount = parseInt(document.getElementById("button-text").getAttribute("data-amount"));
 var title = document.getElementById("title").innerHTML;
 //clean new lines
@@ -58,7 +66,10 @@ fetch("/create-payment-intent", {
       event.preventDefault();
       // Complete payment when the submit button is clicked
       payWithCard(stripe, card, data.clientSecret);
+      
     });
+
+   
   });
 
 // Calls stripe.confirmCardPayment
@@ -78,15 +89,26 @@ var payWithCard = function (stripe, card, clientSecret) {
         showError(result.error.message);
       } else {
         // The payment succeeded!
-        orderComplete(result.paymentIntent.id);
+        //redirect user to success page  
+        window.location.assign('/success?piid=' + result.paymentIntent.id);
+        //orderComplete(result.paymentIntent.id);
+
+        
+  
       }
     });
 };
 
+
+
+
 /* ------- UI helpers ------- */
 
+/*
 // Shows a success message when the payment is complete
 var orderComplete = function (paymentIntentId) {
+
+ 
   loading(false);
   document
     .querySelector(".result-message a")
@@ -97,11 +119,12 @@ var orderComplete = function (paymentIntentId) {
   document.querySelector(".result-message").innerHTML = `Success! Here is Payment ID confirmation: ${paymentIntentId}`;
   document.querySelector(".success").classList.remove("hidden");
   //document.querySelector(".result-message").classList.remove("hidden");
-  document.querySelector('.card-body').style.visibility = 'hidden';
+  document.querySelector('.card').style.visibility = 'hidden';
 
   document.getElementById('checkout-btn').style.visibility = 'hidden';
   document.querySelector("button").disabled = true;
 };
+*/
 
 // Show the customer the error from Stripe if their card fails to charge
 var showError = function (errorMsgText) {

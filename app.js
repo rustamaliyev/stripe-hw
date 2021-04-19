@@ -12,8 +12,15 @@ app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs'
 }));
+
+
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
+
+var hbs = exphbs.create({});
+hbs.handlebars.registerHelper('piid', function() {
+  //return document.location.search.split('?')[1].split('=')[1];
+});
 
 /**
  * Home route
@@ -21,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res) {
   res.render('index');
 });
-
 
 /**
  * Checkout route
@@ -57,13 +63,12 @@ app.get('/', function(req, res) {
   });
 });
 
-
 /**
  * Stipe payment intent route
  */
 
 
-app.post("/create-payment-intent", async (req, res, next) => {
+app.post("/create-payment-intent", async (req, res) => {
  
   const { items } = req.body;
   const amount = req.body.item.amount;
@@ -78,11 +83,23 @@ app.post("/create-payment-intent", async (req, res, next) => {
     description: title,
   });
 
+ 
   res.send({
     clientSecret: paymentIntent.client_secret
   });
-  next()
+
 });
+
+
+
+/**
+ * Success route
+ */
+ app.get('/success', function(req, res) {
+  res.render('success');
+});
+
+
 
 
 

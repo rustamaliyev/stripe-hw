@@ -1,3 +1,5 @@
+
+
 <main>
   <div class="mt-40 text-center text-success">
     <h1>
@@ -7,7 +9,11 @@
   </div>
   <div class="mt-40 text-center">
     <div class="mt-20 text-center text-secondary border-placeholder">
-      Add details about the payment here!
+      <p class="result-message">
+        {{success}}
+            Payment succeeded, see the result in your
+            <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+        </p>
     </div>
   </div>
 </main>

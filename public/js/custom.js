@@ -10,5 +10,8 @@ $(document).ready(function() {
     amount = amounts[i].getAttribute('data-amount') / 100;  
     amounts[i].innerHTML = amount.toFixed(2);
   }
+
 })
+
+
 

@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
-const exphbs = require('express-handlebars')
-const stripe = require('stripe');
+const exphbs = require('express-handlebars');
+const { nextTick } = require('process');
+const stripe = require('stripe')('sk_test_T2x0op92qlyAqMafDqaK63GV00SmtfAp6n');
 
 var app = express();
-
+app.use(express.json());
 // view engine setup (Handlebars)
+
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs'
@@ -19,6 +21,43 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res) {
   res.render('index');
 });
+
+
+/**
+ * Stipe payment intent
+ */
+
+
+app.post("/create-payment-intent", async (req, res, next) => {
+ 
+  const { items } = req.body;
+  const amount = req.body.item.amount;
+  //const piID = JSON.stringify(req.body.item.item);
+  const title = req.body.item.title;
+  // Create a PaymentIntent with the order amount and currency
+  
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: amount,
+    currency: "usd",
+    description: title,
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret
+  });
+  next()
+});
+
+
+
+/**
+ * Success route
+ */
+ app.get('/success', function(req, res) {
+  res.render('success');
+});
+
 
 /**
  * Checkout route
@@ -54,12 +93,7 @@ app.get('/checkout', function(req, res) {
   });
 });
 
-/**
- * Success route
- */
-app.get('/success', function(req, res) {
-  res.render('success');
-});
+
 
 /**
  * Start server

@@ -97,8 +97,10 @@ var orderComplete = function(paymentIntentId) {
       "https://dashboard.stripe.com/test/payments/" + paymentIntentId
     );
   document.querySelector(".result-message").innerHTML = `Success! Here is Payment ID confirmation: ${paymentIntentId}`;
-  document.querySelector(".result-message").classList.remove("hidden");
-  //document.querySelector(".success").classList.remove("hidden");
+  document.querySelector(".success").classList.remove("hidden");
+  //document.querySelector(".result-message").classList.remove("hidden");
+  document.querySelector('.card-body').style.visibility = 'hidden';
+  
   document.getElementById('checkout-btn').style.visibility = 'hidden';
   document.querySelector("button").disabled = true;
 };

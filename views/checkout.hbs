@@ -15,29 +15,26 @@
     <div class="card box-shadow mt-40">
 
       <div class="card-body">
+        <p id="card-error" role="alert"></p>
+                
+                <div class="mt-40 text-center text-success success hidden">
+                    <h1>
+                      <i class="far fa-check-circle"></i> 
+                      Success!
+                    </h1>
+                    <p class="result-message">
+                      Payment succeeded, see the result in your
+                      <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+                    </p>
+         </div>
         <form name="payment-form" id="payment-form">
           
           <div>
             <label for="email">Email address</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="you@email.com">
           </div>
-          <div class="mt-20 text-center text-secondary border-placeholder">
-         
+          <div class="mt-20 text-center text-secondary border-placeholder">        
                 <div id="card-element" class="form-control"><!--Stripe.js injects the Card Element--></div>
-                <p id="card-error" role="alert"></p>
-                
-                <div class="mt-40 text-center text-success">
-                    <h1>
-                      <i class="far fa-check-circle"></i> 
-                      Success!
-                    </h1>
-                    <p class="result-message hidden">
-                      Payment succeeded, see the result in your
-                      <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
-                    </p>
-                </div>
-
-             
           </div>
           <div class="mt-20">
             <button type="submit" id="checkout-btn" class="btn btn-lg btn-block btn-primary"><div class="spinner hidden" id="spinner"></div>

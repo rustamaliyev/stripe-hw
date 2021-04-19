@@ -24,45 +24,9 @@ app.get('/', function(req, res) {
 
 
 /**
- * Stipe payment intent
- */
-
-
-app.post("/create-payment-intent", async (req, res, next) => {
- 
-  const { items } = req.body;
-  const amount = req.body.item.amount;
-  //const piID = JSON.stringify(req.body.item.item);
-  const title = req.body.item.title;
-  // Create a PaymentIntent with the order amount and currency
-  
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: amount,
-    currency: "usd",
-    description: title,
-  });
-
-  res.send({
-    clientSecret: paymentIntent.client_secret
-  });
-  next()
-});
-
-
-
-/**
- * Success route
- */
- app.get('/success', function(req, res) {
-  res.render('success');
-});
-
-
-/**
  * Checkout route
  */
-app.get('/checkout', function(req, res) {
+ app.get('/checkout', function(req, res) {
   // Just hardcoding amounts here to avoid using a database
   const item = req.query.item;
   let title, amount, error;
@@ -94,10 +58,38 @@ app.get('/checkout', function(req, res) {
 });
 
 
+/**
+ * Stipe payment intent route
+ */
+
+
+app.post("/create-payment-intent", async (req, res, next) => {
+ 
+  const { items } = req.body;
+  const amount = req.body.item.amount;
+  //const piID = JSON.stringify(req.body.item.item);
+  const title = req.body.item.title;
+  // Create a PaymentIntent with the order amount and currency
+  
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: amount,
+    currency: "usd",
+    description: title,
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret
+  });
+  next()
+});
+
+
+
 
 /**
  * Start server
  */
-app.listen(5000, () => {
-  console.log('Getting served on port 5000');
+app.listen(3000, () => {
+  console.log('Getting served on port 3000');
 });

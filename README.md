@@ -1,20 +1,28 @@
-# Take home project
-This is a simple e-commerce application that a customer can use to purchase a book, but it's missing the payments functionality —  your goal is to integrate Stripe to get this application running!
+About Solution.
+This solution works using Payment Intent API instead of Charges because according to Stripe documentation this is a newer version of payment processing API and going forward all new features will be added to Payment Intent API only. Also it supports in-store payments via terminal and cards that require 3DS, iDEAL, SEPA while Charge API doesn’t support that. In addition to that Payment Intent API is SCA ready.
+Source: https://stripe.com/docs/payments/payment-intents/migration/charges
+Also since I have used Payment Intent API when order is placed the ID begins with “pi_” and not “ch_” since it’s not a Charge API. 
 
-## Candidate instructions
-You'll receive these in email.
+Build
+To build solution I have used Stripe documentation on a Payment Intent API and “Custom payment flow” which can be found here: https://stripe.com/docs/payments/integration-builder 
+There was also a way to use a “Prebuilt Checkout page” but I have opted out since we needed to have control over our form and styles. 
 
-## Application overview
-This demo is written in Javascript (Node.js) with the [Express framework](https://expressjs.com/). You'll need to retrieve a set of testmode API keys from the Stripe dashboard (you can create a free test account [here](https://dashboard.stripe.com/register)) to run this locally.
+Challenges
+The main challenge was to get card-element form displayed as for some reason it didn’t work right out of the box as I was following the documentation. I had to enable express.json() on the server side which is a built-in middleware function in Express. It parses incoming requests with JSON payloads and is based on body-parser. And then it started to work but still was sensitive to changes that I was making to JavaScript code and keep dis-appearing.  
 
-We're using the [Bootstrap](https://getbootstrap.com/docs/4.6/getting-started/introduction/) CSS framework. It's the most popular CSS framework in the world and is pretty easy to get started with — feel free to modify styles/layout if you like. 
+Future improvement
+The first thing I would do is to store amount and title in the database. I might choose Firebase for simplicity if it’s a small project or other NoSQL db. That way we don’t need to hardcode those parameters in the code. Other improvements could be: 
 
-To simplify this project, we're also not using any database here, either. Instead `app.js` includes a simple switch statement to read the GET params for `item`. 
+
+•	Basic Authentication screen (can be done via Firebase)
+•	Ordering multiple items
+•	Order lookup by order id. 
+•	Email confirmation after order is placed
 
 To get started, clone the repository and run `npm install` to install dependencies:
 
 ```
-git clone https://github.com/mattmitchell6/sa-takehome-project-node && cd sa-takehome-project-node
+git clone https://github.com/rustamaliyev/stripe-hw.git && cd stripe-hw
 npm install
 ```
 
